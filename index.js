@@ -124,3 +124,10 @@ app.post('/voice', (req, res) => {
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server running on port ${port}`);
 });
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM, closing WebSockets');
+  if (speechmaticsWs) speechmaticsWs.close();
+  if (wss) wss.close();
+  process.exit(0);
+});
