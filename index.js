@@ -18,7 +18,7 @@ console.log('Starting app with env:', {
   TWILIO_AUTH_TOKEN: !!process.env.TWILIO_AUTH_TOKEN,
   TWILIO_CALLER_ID: !!process.env.TWILIO_CALLER_ID,
   SPEECHMATICS_API_KEY: !!process.env.SPEECHMATICS_API_KEY,
-  FLY_APP_NAME: process.env.FLY_APP_NAME
+  RAILWAY_APP_NAME: process.env.RAILWAY_APP_NAME
 });
 
 const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
@@ -114,7 +114,7 @@ app.post('/voice', (req, res) => {
   const response = new VoiceResponse();
   global.currentCall = { callId: req.body.CallSid, phoneNumber: req.body.To };
   const connect = response.connect();
-  connect.stream({ url: `wss://${process.env.FLY_APP_NAME}.fly.dev` });
+  connect.stream({ url: `wss://${process.env.RAILWAY_APP_NAME}` });
   const dial = response.dial();
   dial.number({ callerId: process.env.TWILIO_CALLER_ID }, '+498941434044');
   res.type('text/xml');
